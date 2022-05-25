@@ -1,7 +1,13 @@
 package main
 
-import "fmt"
+import (
+    "godoc/app/logger"
+    "log"
+)
 
 func main() {
-    fmt.Println("this is go document system.")
+    app := wireApp(logger.NewAppLogger())
+    if err := app.Run(); err != nil {
+        log.Fatalln(err)
+    }
 }
