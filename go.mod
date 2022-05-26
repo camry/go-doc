@@ -6,7 +6,7 @@ require (
 	github.com/camry/dove v1.0.2
 	github.com/google/wire v0.5.0
 	github.com/labstack/echo/v4 v4.7.2
-	github.com/yuin/goldmark v1.4.12
+	github.com/russross/blackfriday/v2 v2.1.0
 	go.uber.org/zap v1.21.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
 )

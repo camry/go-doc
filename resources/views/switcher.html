@@ -1,0 +1,18 @@
+{{ define "switcher" }}
+<div class="switcher">
+    <div class="dropdown">
+        <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                aria-expanded="true">
+            {{index .versions .currentVersion }}
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+            {{range $key,$value := .versions}}
+            <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="/docs/{{$key}}/1">{{$value}}</a>
+            </li>
+            {{ end }}
+        </ul>
+    </div>
+</div>
+{{ end }}

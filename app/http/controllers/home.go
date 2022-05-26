@@ -1,28 +1,43 @@
 package controllers
 
 import (
-    "bytes"
     "fmt"
     "github.com/camry/dove/log"
     "github.com/labstack/echo/v4"
-    "github.com/yuin/goldmark"
+    "github.com/russross/blackfriday/v2"
     "html/template"
     "io/ioutil"
     "net/http"
+    "regexp"
+    "strings"
 )
 
 const DefaultVersion = "appz"
 
 type home struct {
     l *log.Helper
+    v map[string]string
 }
 
 func NewHome(l log.Logger) *home {
-    return &home{l: log.NewHelper(l)}
+    docVersions := map[string]string{
+        "appz":      "末日项目",
+        "csp":       "泰坦项目",
+        "h5":        "冒险H5",
+        "h5z":       "末日H5",
+        "h5s":       "末日H5独立版",
+        "devops":    "运维文档",
+        "tools":     "开发工具",
+        "knowledge": "学习笔记",
+        "devpsr":    "开发规范",
+    }
+    return &home{l: log.NewHelper(l), v: docVersions}
 }
 
 func (h *home) Index(c echo.Context) error {
-    return c.Render(http.StatusOK, "home.html", "")
+    return c.Render(http.StatusOK, "home.html", map[string]any{
+        "v": h.v,
+    })
 }
 
 func (h *home) RootPage(c echo.Context) error {
@@ -33,21 +48,51 @@ func (h *home) Show(c echo.Context) error {
     version := c.Param("version")
     page := c.Param("page")
 
-    path := fmt.Sprintf("resources/docs/%s/%s.md", version, page)
-
-    data, err1 := ioutil.ReadFile(path)
-
+    // 读取文档菜单
+    path1 := fmt.Sprintf("resources/docs/%s/documentation.md", version)
+    input1, err1 := ioutil.ReadFile(path1)
     if err1 != nil {
         return err1
     }
+    output1 := blackfriday.Run(blackfriday.Run(input1))
 
-    var buf bytes.Buffer
+    // 读取文档内容
+    isMd := true
+    if _, ok := h.v[version]; !ok {
+        isMd = false
+    }
+    path2 := fmt.Sprintf("resources/docs/%s/%s.md", version, page)
+    input2, err2 := ioutil.ReadFile(path2)
+    if err2 != nil {
+        isMd = false
+    }
+    if !isMd {
+        return c.Render(http.StatusOK, "docs.html", map[string]any{
+            "title":          "Page not found",
+            "index":          template.HTML(strings.ReplaceAll(string(output1), "{{version}}", version)),
+            "content":        template.HTML(fmt.Sprintf("Markdown 文档不存在！")),
+            "currentVersion": version,
+            "versions":       h.v,
+        })
+    }
+    output2 := blackfriday.Run(input2)
 
-    if err2 := goldmark.Convert(data, &buf); err2 != nil {
-        return err2
+    reg, err3 := regexp.Compile("<h1+>([\\s\\S]*?)</h1>")
+    if err3 != nil {
+        return err3
     }
 
+    var titles []string
+    if _, ok := h.v[version]; ok {
+        titles = append(titles, h.v[version])
+    }
+    titles = append(titles, strings.ReplaceAll(strings.ReplaceAll(string(reg.Find(output2)), "<h1>", ""), "</h1>", ""))
+
     return c.Render(http.StatusOK, "docs.html", map[string]any{
-        "content": template.HTML(buf.String()),
+        "title":          strings.Join(titles, " - "),
+        "index":          template.HTML(strings.ReplaceAll(string(output1), "{{version}}", version)),
+        "content":        template.HTML(strings.ReplaceAll(string(output2), "{{version}}", version)),
+        "currentVersion": version,
+        "versions":       h.v,
     })
 }

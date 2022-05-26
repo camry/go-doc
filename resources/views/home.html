@@ -1,10 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>Home Title</title>
+    <title>DGame 游戏文档</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="author" content="Camry Chen">
+    <meta name="description" content="DGame 游戏文档">
+    <meta name="keywords" content="golang,dove">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Miriam+Libre:400,700' rel='stylesheet' type='text/css'>
+    <link href="/assets/css/prism.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/docs.css">
+    <link rel="icon" href="/assets/favicon.ico">
+    <style>
+        button.code_copy {
+            background: #FFF;
+            color: #000;
+            font-size: .65em;
+            font-family: Arial, Tahoma, Vendana;
+            border: 0;
+            border-radius: 0 0.3em 0 0;
+        }
+
+        button.code_copy:hover {
+            background: #F30;
+            color: #FFF;
+        }
+    </style>
 </head>
-<body>
-this is home.
+<body class="docs home language-tag">
+<nav class="main">
+    <a href="/" class="brand nav-block">
+        <img src="/assets/img/dgame-logo.png"/>
+        <span>DGAME DOC</span>
+    </a>
+    <div class="search nav-block invisible">
+    </div>
+    <ul class="main-nav">
+        <li><a href="/docs/appz/1">游戏文档</a></li>
+        <li><a href="http://192.168.1.228:8888/hfs/" target="_blank">文件服务器</a></li>
+        <li><a href="http://gitlab.dy/" target="_blank">Git</a></li>
+        <li><a href="http://jenkins.dy/" target="_blank">Jenkins</a></li>
+        <li><a href="http://devops-web.dy/" target="_blank">Devops</a></li>
+        <li><a href="https://tower.im/teams/8a69d11351774567bea48de99bd26721/projects/" target="_blank">Tower</a></li>
+        <li><a href="http://dgame.grafana.xnwan.com/" target="_blank">Grafana</a></li>
+        <li class="dropdown">
+            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                内网入口 <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="http://192.168.1.147/appz/" target="_blank">末日危机</a></li>
+                <li class="divider"></li>
+                <li><a href="http://192.168.1.200/csp/" target="_blank">末日Q版</a></li>
+                <li class="divider"></li>
+                <li><a href="http://192.168.1.246/h5/" target="_blank">冒险H5</a></li>
+                <li class="divider"></li>
+                <li><a href="http://192.168.1.177/h5z/" target="_blank">末日H5</a></li>
+                <li class="divider"></li>
+                <li><a href="http://192.168.1.220/h5s/" target="_blank">末日H5S</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="responsive-sidebar-nav">
+        <a href="#" class="toggle-slide menu-link btn">&#9776;</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="container">
+
+        <div class="content">
+            <h1>Love beautiful code? We do too.</h1>
+            <p>The PHP Framework For Game</p>
+        </div>
+
+        <div class="macbook">
+            <pre class="line-numbers">
+<code class="language-php">&lt;?php
+namespace Application\Tests;
+
+use Application\Core\ApplicationProcess;
+
+class Test extends ApplicationProcess {
+    /**
+     * 启动进程。
+     *
+     * @throws \Exception
+     */
+    function run(): void {
+        echo "Hello World.", PHP_EOL;
+        exit(0)
+    }
+}</code>
+            </pre>
+            <svg version="1.1"
+                 xmlns="http://www.w3.org/2000/svg"
+                 x="0px" y="0px" width="694.1px" height="384px" viewBox="0 0 694.1 384"
+                 enable-background="new 0 0 694.1 384"
+                 xml:space="preserve">
+                <defs>
+                </defs>
+                <g id="macbook" transform="translate(1.000000, 1.000000)" sketch:type="MSLayerGroup">
+                    <path id="body-top" sketch:type="MSShapeGroup" fill="#FEFEFE" stroke="#8492A5" stroke-width="2" d="M594,0H98
+		C84.5,0,73,11.1,73,24.8V351h546V24.8C619,11.1,607.5,0,594,0z"/>
+                    <circle id="webcam" sketch:type="MSShapeGroup" fill="none" stroke="#8492A5" stroke-width="2"
+                            cx="347" cy="19" r="4">
+	                </circle>
+                    <g id="body-bottom-group" transform="translate(0.000000, 351.000000)" sketch:type="MSShapeGroup">
+		<path id="body-bottom" fill="#FDFDFD" stroke="#8492A5" stroke-width="2" d="M640.8,31H51.3C20.6,31,0,20.5,0,16V2.4C0,1.1,1.3,0,3,0
+			h686.1c1.7,0,3,1.1,3,2.4v14.1C692.1,20.1,676.1,31,640.8,31z"/>
+                        <path id="bottom-seam" fill="none" stroke="#8492A5" stroke-linecap="square"
+                              d="M0.5,14.5h689.7"/>
+	                    </g>
+                    <rect id="screen" x="95" y="39" sketch:type="MSShapeGroup" fill="#FFFFFF" stroke="#8492A5"
+                          width="501.1" height="292">
+	                </rect>
+                    <path id="touchpad" sketch:type="MSShapeGroup" fill="#FFFFFF" stroke="#8492A5" d="M421,352v3.1c0,2.2-4.3,2.9-7.6,2.9H278.8
+		c-3.5,0-7.8-0.7-7.8-2.9V352"/>
+                </g>
+            </svg>
+        </div>
+    </div>
+</section>
+
+<footer class="main">
+    <p>Copyright &copy; 2022 动魂工作室后端技术组出品</p>
+    <p class="less-significant">
+        <a href="https://github.com/camry"> Designed by Camry.Chen<br> </a>
+    </p>
+</footer>
+<script src="/assets/js/prism.js"></script>
 </body>
 </html>
