@@ -5,6 +5,7 @@ import (
     "github.com/camry/dove/log"
     "github.com/labstack/echo/v4"
     "github.com/russross/blackfriday/v2"
+    "gopkg.in/yaml.v3"
     "html/template"
     "io/ioutil"
     "net/http"
@@ -19,22 +20,29 @@ type home struct {
     v map[string]string
 }
 
+type Config struct {
+    Versions map[string]string `yaml:"versions"`
+}
+
 func NewHome(l log.Logger) *home {
-    docVersions := map[string]string{
-        "appz":      "末日项目",
-        "csp":       "泰坦项目",
-        "h5":        "冒险H5",
-        "h5z":       "末日H5",
-        "h5s":       "末日H5独立版",
-        "devops":    "运维文档",
-        "tools":     "开发工具",
-        "knowledge": "学习笔记",
-        "devpsr":    "开发规范",
+    return &home{l: log.NewHelper(l)}
+}
+
+func (h *home) loadVersions() {
+    var config Config
+    buf, err1 := ioutil.ReadFile("config/versions.yaml")
+    if err1 != nil {
+        h.l.Errorf("load config/versions.yaml error: %s", err1)
     }
-    return &home{l: log.NewHelper(l), v: docVersions}
+    err2 := yaml.Unmarshal(buf, &config)
+    if err2 != nil {
+        h.l.Errorf("yaml Unmarshal config/versions.yaml error: %s", err2)
+    }
+    h.v = config.Versions
 }
 
 func (h *home) Index(c echo.Context) error {
+    h.loadVersions()
     return c.Render(http.StatusOK, "home.html", map[string]any{
         "v": h.v,
     })
@@ -43,7 +51,7 @@ func (h *home) Index(c echo.Context) error {
 func (h *home) RootPage(c echo.Context) error {
     version := c.Param("version")
 
-    h.l.Infow("version", version)
+    h.loadVersions()
 
     if _, ok := h.v[version]; !ok {
         version = DefaultVersion
@@ -59,6 +67,8 @@ func (h *home) Show(c echo.Context) error {
     if page == "" {
         page = "1"
     }
+
+    h.loadVersions()
 
     // 读取文档菜单
     path1 := fmt.Sprintf("resources/docs/%s/documentation.md", version)

@@ -50,8 +50,8 @@ func EchoLogger(l log.Logger) echo.MiddlewareFunc {
                 fields = append(fields, "msg", "Redirection")
                 ll.Infow(fields...)
             default:
-                fields = append(fields, "msg", "Success")
-                ll.Infow(fields...)
+                // fields = append(fields, "msg", "Success")
+                // ll.Infow(fields...)
             }
 
             return nil
