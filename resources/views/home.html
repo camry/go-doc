@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="author" content="Camry Chen">
     <meta name="description" content="DGame 游戏文档">
-    <meta name="keywords" content="golang,dove">
+    <meta name="keywords" content="golang,dove,documentation">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='https://fonts.googleapis.com/css?family=Miriam+Libre:400,700' rel='stylesheet' type='text/css'>
     <link href="/assets/css/prism.css" rel="stylesheet">
@@ -37,29 +37,7 @@
     <div class="search nav-block invisible">
     </div>
     <ul class="main-nav">
-        <li><a href="/docs/appz/1">游戏文档</a></li>
-        <li><a href="http://192.168.1.228:8888/hfs/" target="_blank">文件服务器</a></li>
-        <li><a href="http://gitlab.dy/" target="_blank">Git</a></li>
-        <li><a href="http://jenkins.dy/" target="_blank">Jenkins</a></li>
-        <li><a href="http://devops-web.dy/" target="_blank">Devops</a></li>
-        <li><a href="https://tower.im/teams/8a69d11351774567bea48de99bd26721/projects/" target="_blank">Tower</a></li>
-        <li><a href="http://dgame.grafana.xnwan.com/" target="_blank">Grafana</a></li>
-        <li class="dropdown">
-            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                内网入口 <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="http://192.168.1.147/appz/" target="_blank">末日危机</a></li>
-                <li class="divider"></li>
-                <li><a href="http://192.168.1.200/csp/" target="_blank">末日Q版</a></li>
-                <li class="divider"></li>
-                <li><a href="http://192.168.1.246/h5/" target="_blank">冒险H5</a></li>
-                <li class="divider"></li>
-                <li><a href="http://192.168.1.177/h5z/" target="_blank">末日H5</a></li>
-                <li class="divider"></li>
-                <li><a href="http://192.168.1.220/h5s/" target="_blank">末日H5S</a></li>
-            </ul>
-        </li>
+        {{template "main-nav" .}}
     </ul>
     <div class="responsive-sidebar-nav">
         <a href="#" class="toggle-slide menu-link btn">&#9776;</a>
@@ -122,13 +100,6 @@ class Test extends ApplicationProcess {
         </div>
     </div>
 </section>
-
-<footer class="main">
-    <p>Copyright &copy; 2022 动魂工作室后端技术组出品</p>
-    <p class="less-significant">
-        <a href="https://github.com/camry"> Designed by Camry.Chen<br> </a>
-    </p>
-</footer>
-<script src="/assets/js/prism.js"></script>
+{{template "footer" .}}
 </body>
 </html>
