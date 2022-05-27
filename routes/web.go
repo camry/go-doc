@@ -58,7 +58,10 @@ func NewEcho(l log.Logger) *echo.Echo {
     home := controllers.NewHome(l)
 
     e.GET("/", home.Index)
+    e.GET("/docs", home.RootPage)
     e.GET("/docs/", home.RootPage)
+    e.GET("/docs/:version", home.RootPage)
+    e.GET("/docs/:version/", home.RootPage)
     e.GET("/docs/:version/:page", home.Show)
 
     return e

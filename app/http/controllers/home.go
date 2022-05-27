@@ -41,32 +41,37 @@ func (h *home) Index(c echo.Context) error {
 }
 
 func (h *home) RootPage(c echo.Context) error {
-    return c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/docs/%s/1", DefaultVersion))
+    version := c.Param("version")
+
+    h.l.Infow("version", version)
+
+    if _, ok := h.v[version]; !ok {
+        version = DefaultVersion
+    }
+
+    return c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/docs/%s/1", version))
 }
 
 func (h *home) Show(c echo.Context) error {
     version := c.Param("version")
     page := c.Param("page")
 
+    if page == "" {
+        page = "1"
+    }
+
     // 读取文档菜单
     path1 := fmt.Sprintf("resources/docs/%s/documentation.md", version)
     input1, err1 := ioutil.ReadFile(path1)
     if err1 != nil {
-        return err1
+        return c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/docs/%s/%s", DefaultVersion, version))
     }
     output1 := blackfriday.Run(blackfriday.Run(input1))
 
     // 读取文档内容
-    isMd := true
-    if _, ok := h.v[version]; !ok {
-        isMd = false
-    }
     path2 := fmt.Sprintf("resources/docs/%s/%s.md", version, page)
     input2, err2 := ioutil.ReadFile(path2)
     if err2 != nil {
-        isMd = false
-    }
-    if !isMd {
         return c.Render(http.StatusOK, "docs.html", map[string]any{
             "title":          "Page not found",
             "index":          template.HTML(strings.ReplaceAll(string(output1), "{{version}}", version)),

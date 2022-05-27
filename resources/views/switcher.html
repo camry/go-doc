@@ -9,7 +9,7 @@
         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
             {{range $key,$value := .versions}}
             <li role="presentation">
-                <a role="menuitem" tabindex="-1" href="/docs/{{$key}}/1">{{$value}}</a>
+                <a role="menuitem" tabindex="-1" href="/docs/{{$key}}">{{$value}}</a>
             </li>
             {{ end }}
         </ul>
