@@ -47,8 +47,8 @@ func EchoLogger(l log.Logger) echo.MiddlewareFunc {
                 fields = append(fields, "msg", "Client error")
                 ll.Warnw(fields...)
             case n >= 300:
-                fields = append(fields, "msg", "Redirection")
-                ll.Infow(fields...)
+                // fields = append(fields, "msg", "Redirection")
+                // ll.Infow(fields...)
             default:
                 // fields = append(fields, "msg", "Success")
                 // ll.Infow(fields...)
