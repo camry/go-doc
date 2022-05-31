@@ -13,7 +13,7 @@ var ProviderSet = wire.NewSet(NewApp)
 func NewApp(e *echo.Echo, l log.Logger) *dove.App {
     log.SetLogger(l)
     hs := ghttp.NewServer(
-        ghttp.Address(":8080"),
+        ghttp.Address(":3010"),
         ghttp.Handler(e),
     )
     app := dove.New(
