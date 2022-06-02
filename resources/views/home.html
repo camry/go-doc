@@ -43,6 +43,17 @@
     </div>
 </nav>
 
+<nav id="slide-menu" class="slide-menu" role="navigation">
+    <div class="brand">
+        <a href="/">
+            <img src="/assets/img/dgame-logo.png">
+        </a>
+    </div>
+    <ul class="slide-main-nav">
+        {{template "main-nav" .}}
+    </ul>
+</nav>
+
 <section class="hero">
     <div class="container">
 
@@ -100,5 +111,6 @@ class Test extends ApplicationProcess {
     </div>
 </section>
 {{template "footer" .}}
+<script src="/assets/js/docs.js"></script>
 </body>
 </html>
