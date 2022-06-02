@@ -89,43 +89,27 @@
 
     let fixed = $(".fixed");
     if (fixed.length > 0) {
-        fixed.hide();
-        let h2 = $('article h2');
-        if (h2.length > 0) {
-            h2.each(function () {
-                let obj = $(this);
-                obj.attr("id", obj.text());
-                fixed.find('ul').append('<li><a href="#' + obj.text() + '">' + obj.text() + '</a></li>');
-            });
-            fixed.show();
-        }
         if (IsMobile()) {
             fixed.remove();
             $(".docs article").css({
                 "margin-right": 0
             });
+        } else {
+            fixed.hide();
+            let h2 = $('article h2');
+            if (h2.length > 0) {
+                h2.each(function () {
+                    let obj = $(this);
+                    obj.attr("id", obj.text());
+                    fixed.find('ul').append('<li><a href="#' + obj.text() + '">' + obj.text() + '</a></li>');
+                });
+                fixed.show();
+            }
         }
     }
 
     function IsMobile() {
-        const isMobile = {
-            Android: function () {
-                return navigator.userAgent.match(/Android/i) ? true : false;
-            },
-            BlackBerry: function () {
-                return navigator.userAgent.match(/BlackBerry/i) ? true : false;
-            },
-            iOS: function () {
-                return navigator.userAgent.match(/iPhone|iPad|iPod/i) ? true : false;
-            },
-            Windows: function () {
-                return navigator.userAgent.match(/IEMobile/i) ? true : false;
-            },
-            any: function () {
-                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Windows());
-            }
-        };
-        return isMobile.any();
+        return navigator.userAgent.match(/mobile/i)
     }
 </script>
 <script src="/assets/js/docs.js"></script>
