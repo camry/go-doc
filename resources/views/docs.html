@@ -96,6 +96,9 @@
             });
         } else {
             fixed.hide();
+            $(window).scroll(function () {
+                fixed.css('top', 110 + $(this).scrollTop() + 'px')
+            });
             let h2 = $('article h2');
             if (h2.length > 0) {
                 h2.each(function () {
