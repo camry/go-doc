@@ -2,16 +2,17 @@ package middleware
 
 import (
     "fmt"
-    "github.com/camry/dove/log"
-    "github.com/labstack/echo/v4"
     "time"
+
+    "github.com/camry/g/glog"
+    "github.com/labstack/echo/v4"
 )
 
 // EchoLogger 针对 echo 框架日志中间件。
-func EchoLogger(l log.Logger) echo.MiddlewareFunc {
+func EchoLogger(l glog.Logger) echo.MiddlewareFunc {
     return func(next echo.HandlerFunc) echo.HandlerFunc {
         return func(c echo.Context) error {
-            ll := log.NewHelper(l)
+            ll := glog.NewHelper(l)
             start := time.Now()
 
             err := next(c)

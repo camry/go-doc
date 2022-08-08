@@ -8,14 +8,14 @@ package main
 
 import (
 	"github.com/camry/dove"
-	"github.com/camry/dove/log"
+	"github.com/camry/g/glog"
 	"godoc/app"
 	"godoc/routes"
 )
 
 // Injectors from wire.go:
 
-func wireApp(l log.Logger) *dove.App {
+func wireApp(l glog.Logger) *dove.App {
 	echo := routes.NewEcho(l)
 	doveApp := app.NewApp(echo, l)
 	return doveApp

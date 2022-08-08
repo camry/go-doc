@@ -2,7 +2,8 @@ package logger
 
 import (
     "fmt"
-    "github.com/camry/dove/log"
+    
+    "github.com/camry/g/glog"
     "go.uber.org/zap"
     "go.uber.org/zap/zapcore"
 )
@@ -29,7 +30,7 @@ func NewZapLogger(opts ...ZapOption) *ZapLogger {
 }
 
 // Log 实现 log.Logger 接口。
-func (l *ZapLogger) Log(level log.Level, keyvals ...interface{}) error {
+func (l *ZapLogger) Log(level glog.Level, keyvals ...interface{}) error {
     if len(keyvals) == 0 || len(keyvals)%2 != 0 {
         l.log.Warn(fmt.Sprint("keyvals must appear in pairs: ", keyvals))
         return nil
@@ -40,13 +41,13 @@ func (l *ZapLogger) Log(level log.Level, keyvals ...interface{}) error {
         data = append(data, zap.Any(fmt.Sprint(keyvals[i]), fmt.Sprint(keyvals[i+1])))
     }
     switch level {
-    case log.LevelDebug:
+    case glog.LevelDebug:
         l.log.Debug("", data...)
-    case log.LevelInfo:
+    case glog.LevelInfo:
         l.log.Info("", data...)
-    case log.LevelWarn:
+    case glog.LevelWarn:
         l.log.Warn("", data...)
-    case log.LevelError:
+    case glog.LevelError:
         l.log.Error("", data...)
     }
     return nil

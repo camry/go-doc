@@ -3,13 +3,14 @@ module godoc
 go 1.18
 
 require (
-	github.com/camry/dove v1.0.2
+	github.com/camry/dove v1.1.0
+	github.com/camry/g v1.0.0
 	github.com/google/wire v0.5.0
 	github.com/labstack/echo/v4 v4.7.2
 	github.com/russross/blackfriday/v2 v2.1.0
 	go.uber.org/zap v1.21.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
-	gopkg.in/yaml.v3 v3.0.0
+	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
@@ -24,7 +25,7 @@ require (
 	go.uber.org/multierr v1.8.0 // indirect
 	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519 // indirect
 	golang.org/x/net v0.0.0-20220425223048-2871e0cb64e4 // indirect
-	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
+	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4 // indirect
 	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
 	golang.org/x/text v0.3.7 // indirect
 )

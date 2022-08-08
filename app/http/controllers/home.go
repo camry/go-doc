@@ -2,21 +2,22 @@ package controllers
 
 import (
     "fmt"
-    "github.com/camry/dove/log"
-    "github.com/labstack/echo/v4"
-    "github.com/russross/blackfriday/v2"
-    "gopkg.in/yaml.v3"
     "html/template"
     "io/ioutil"
     "net/http"
     "regexp"
     "strings"
+
+    "github.com/camry/g/glog"
+    "github.com/labstack/echo/v4"
+    "github.com/russross/blackfriday/v2"
+    "gopkg.in/yaml.v3"
 )
 
 const DefaultVersion = "appz"
 
 type home struct {
-    l *log.Helper
+    l *glog.Helper
     v map[string]string
 }
 
@@ -24,8 +25,8 @@ type Config struct {
     Versions map[string]string `yaml:"versions"`
 }
 
-func NewHome(l log.Logger) *home {
-    return &home{l: log.NewHelper(l)}
+func NewHome(l glog.Logger) *home {
+    return &home{l: glog.NewHelper(l)}
 }
 
 func (h *home) loadVersions() {

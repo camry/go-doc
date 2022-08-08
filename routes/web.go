@@ -2,14 +2,15 @@ package routes
 
 import (
     "fmt"
-    "github.com/camry/dove/log"
-    "github.com/google/wire"
-    "github.com/labstack/echo/v4"
     "godoc/app/http/controllers"
     "godoc/routes/middleware"
     "html/template"
     "io"
     "net/http"
+
+    "github.com/camry/g/glog"
+    "github.com/google/wire"
+    "github.com/labstack/echo/v4"
 )
 
 var ProviderSet = wire.NewSet(NewEcho)
@@ -23,7 +24,7 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 }
 
 type HTTPErrorHandler struct {
-    l *log.Helper
+    l *glog.Helper
 }
 
 func (eh *HTTPErrorHandler) customHTTPErrorHandler(err error, c echo.Context) {
@@ -41,14 +42,14 @@ func (eh *HTTPErrorHandler) customHTTPErrorHandler(err error, c echo.Context) {
     }
 }
 
-func NewEcho(l log.Logger) *echo.Echo {
+func NewEcho(l glog.Logger) *echo.Echo {
     e := echo.New()
 
     e.Static("/assets", "resources/assets")
 
     e.Use(middleware.EchoLogger(l))
 
-    eh := &HTTPErrorHandler{l: log.NewHelper(l)}
+    eh := &HTTPErrorHandler{l: glog.NewHelper(l)}
     e.HTTPErrorHandler = eh.customHTTPErrorHandler
 
     e.Renderer = &Template{
