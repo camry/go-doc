@@ -3,8 +3,8 @@ module godoc
 go 1.18
 
 require (
-	github.com/camry/dove v1.1.0
-	github.com/camry/g v1.0.0
+	github.com/camry/dove v1.1.2
+	github.com/camry/g v1.0.2
 	github.com/google/wire v0.5.0
 	github.com/labstack/echo/v4 v4.7.2
 	github.com/russross/blackfriday/v2 v2.1.0
