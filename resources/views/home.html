@@ -64,20 +64,20 @@
 
         <div class="macbook">
             <pre class="line-numbers">
-<code class="language-php">&lt;?php
-namespace Application\Tests;
+<code class="language-php">package main
 
-use Application\Core\ApplicationProcess;
+func main() {
+    hs := ghttp.NewServer()
+    gs := grpc.NewServer()
 
-class Test extends ApplicationProcess {
-    /**
-     * 启动进程。
-     *
-     * @throws \Exception
-     */
-    function run(): void {
-        echo "Hello World.", PHP_EOL;
-        exit(0)
+    app := dove.New(
+        dove.Name("dove"),
+        dove.Version(dove.Release),
+        dove.Server(hs, gs),
+    )
+
+    if err := app.Run(); err != nil {
+        log.Fatal(err)
     }
 }</code>
             </pre>
