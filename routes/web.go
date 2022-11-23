@@ -46,6 +46,7 @@ func NewEcho(l glog.Logger) *echo.Echo {
     e := echo.New()
 
     e.Static("/assets", "resources/assets")
+    e.Static("/docs/files", "resources/docs/files")
 
     e.Use(middleware.EchoLogger(l))
 
