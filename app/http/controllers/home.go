@@ -14,7 +14,7 @@ import (
     "gopkg.in/yaml.v3"
 )
 
-const DefaultVersion = "appz"
+const DefaultVersion = "1.0"
 
 type home struct {
     l *glog.Helper
