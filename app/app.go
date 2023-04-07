@@ -1,6 +1,8 @@
 package app
 
 import (
+    "context"
+
     "github.com/camry/dove"
     "github.com/camry/dove/server/ghttp"
     "github.com/camry/g/glog"
@@ -11,7 +13,6 @@ import (
 var ProviderSet = wire.NewSet(NewApp)
 
 func NewApp(e *echo.Echo, l glog.Logger) *dove.App {
-    glog.SetLogger(l)
     hs := ghttp.NewServer(
         ghttp.Address(":3010"),
         ghttp.Handler(e),
@@ -20,7 +21,10 @@ func NewApp(e *echo.Echo, l glog.Logger) *dove.App {
         dove.Name("godoc"),
         dove.Version("v1.0.0"),
         dove.Server(hs),
-        dove.Logger(glog.GetLogger()),
+        dove.BeforeStart(func(ctx context.Context) error {
+            glog.SetLogger(l)
+            return nil
+        }),
     )
     return app
 }
