@@ -9,10 +9,9 @@ import (
 )
 
 // EchoLogger 针对 echo 框架日志中间件。
-func EchoLogger(l glog.Logger) echo.MiddlewareFunc {
+func EchoLogger() echo.MiddlewareFunc {
     return func(next echo.HandlerFunc) echo.HandlerFunc {
         return func(c echo.Context) error {
-            ll := glog.NewHelper(l)
             start := time.Now()
 
             err := next(c)
@@ -43,16 +42,16 @@ func EchoLogger(l glog.Logger) echo.MiddlewareFunc {
             switch {
             case n >= 500:
                 fields = append(fields, "msg", "Server error")
-                ll.Errorw(fields...)
+                glog.Errorw(fields...)
             case n >= 400:
                 fields = append(fields, "msg", "Client error")
-                ll.Warnw(fields...)
+                glog.Warnw(fields...)
             case n >= 300:
-                // fields = append(fields, "msg", "Redirection")
-                // ll.Infow(fields...)
+                fields = append(fields, "msg", "Redirection")
+                glog.Infow(fields...)
             default:
-                // fields = append(fields, "msg", "Success")
-                // ll.Infow(fields...)
+                fields = append(fields, "msg", "Success")
+                glog.Infow(fields...)
             }
 
             return nil

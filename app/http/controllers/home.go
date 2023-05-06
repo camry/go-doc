@@ -3,8 +3,8 @@ package controllers
 import (
     "fmt"
     "html/template"
-    "io/ioutil"
     "net/http"
+    "os"
     "regexp"
     "strings"
 
@@ -16,8 +16,7 @@ import (
 
 const DefaultVersion = "1.0"
 
-type home struct {
-    l *glog.Helper
+type Home struct {
     v map[string]string
 }
 
@@ -25,31 +24,31 @@ type Config struct {
     Versions map[string]string `yaml:"versions"`
 }
 
-func NewHome(l glog.Logger) *home {
-    return &home{l: glog.NewHelper(l)}
+func NewHome() *Home {
+    return &Home{}
 }
 
-func (h *home) loadVersions() {
+func (h *Home) loadVersions() {
     var config Config
-    buf, err1 := ioutil.ReadFile("config/versions.yaml")
+    buf, err1 := os.ReadFile("config/versions.yaml")
     if err1 != nil {
-        h.l.Errorf("load config/versions.yaml error: %s", err1)
+        glog.Errorf("load config/versions.yaml error: %s", err1)
     }
     err2 := yaml.Unmarshal(buf, &config)
     if err2 != nil {
-        h.l.Errorf("yaml Unmarshal config/versions.yaml error: %s", err2)
+        glog.Errorf("yaml Unmarshal config/versions.yaml error: %s", err2)
     }
     h.v = config.Versions
 }
 
-func (h *home) Index(c echo.Context) error {
+func (h *Home) Index(c echo.Context) error {
     h.loadVersions()
     return c.Render(http.StatusOK, "home.html", map[string]any{
         "v": h.v,
     })
 }
 
-func (h *home) RootPage(c echo.Context) error {
+func (h *Home) RootPage(c echo.Context) error {
     version := c.Param("version")
 
     h.loadVersions()
@@ -61,7 +60,7 @@ func (h *home) RootPage(c echo.Context) error {
     return c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/docs/%s/1", version))
 }
 
-func (h *home) Show(c echo.Context) error {
+func (h *Home) Show(c echo.Context) error {
     version := c.Param("version")
     page := c.Param("page")
 
@@ -73,7 +72,7 @@ func (h *home) Show(c echo.Context) error {
 
     // 读取文档菜单
     path1 := fmt.Sprintf("resources/docs/%s/documentation.md", version)
-    input1, err1 := ioutil.ReadFile(path1)
+    input1, err1 := os.ReadFile(path1)
     if err1 != nil {
         return c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/docs/%s/%s", DefaultVersion, version))
     }
@@ -81,7 +80,7 @@ func (h *home) Show(c echo.Context) error {
 
     // 读取文档内容
     path2 := fmt.Sprintf("resources/docs/%s/%s.md", version, page)
-    input2, err2 := ioutil.ReadFile(path2)
+    input2, err2 := os.ReadFile(path2)
     if err2 != nil {
         return c.Render(http.StatusOK, "docs.html", map[string]any{
             "title":          "Page not found",

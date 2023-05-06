@@ -1,13 +1,16 @@
+//go:build wireinject
+// +build wireinject
+
 package main
 
 import (
-    "github.com/camry/dove"
-    "github.com/camry/g/glog"
-    "github.com/google/wire"
     "godoc/app"
     "godoc/routes"
+
+    "github.com/camry/dove"
+    "github.com/google/wire"
 )
 
-func wireApp(l glog.Logger) *dove.App {
+func wireApp() *dove.App {
     panic(wire.Build(routes.ProviderSet, app.ProviderSet))
 }
