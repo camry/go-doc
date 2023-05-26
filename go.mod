@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/camry/dove v1.2.6
-	github.com/camry/g v1.2.6
+	github.com/camry/g v1.2.8
 	github.com/google/wire v0.5.0
 	github.com/labstack/echo/v4 v4.10.2
 	github.com/russross/blackfriday/v2 v2.1.0
